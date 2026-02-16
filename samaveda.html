@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সামবেদে সঙ্গীত: সম্পূর্ণ অডিওবুক</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600&family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #fcfbf9;
+            --text-color: #2d2d2d;
+            --accent-color: #d97706; /* Saffron */
+            --secondary-color: #854d0e;
+            --highlight-bg: #fef9c3;
+            --keyword-bg: rgba(217, 119, 6, 0.1);
+            --border-color: #e7e5e4;
+            --table-header: #fff7ed;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1c1917;
+            --text-color: #e7e5e4;
+            --accent-color: #fbbf24;
+            --secondary-color: #f59e0b;
+            --highlight-bg: #44403c;
+            --keyword-bg: rgba(251, 191, 36, 0.15);
+            --border-color: #44403c;
+            --table-header: #292524;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Fixed Controls Bar */
+        .controls-bar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(28, 25, 23, 0.95);
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 400px;
+            justify-content: space-between;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 50%;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon:hover { color: var(--accent-color); transform: scale(1.1); background: rgba(255,255,255,0.1); }
+        .divider { width: 1px; height: 20px; background: #57534e; }
+
+        /* Book Container */
+        .book-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 90px 20px 100px 20px;
+            padding: 60px;
+            background-color: var(--bg-color);
+            border-left: 5px solid var(--secondary-color);
+            font-size: 19px;
+            line-height: 1.9;
+            text-align: justify;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Headings */
+        h1 {
+            font-family: 'Noto Serif Bengali', serif;
+            color: var(--secondary-color);
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px double var(--accent-color);
+            padding-bottom: 20px;
+        }
+        h2 {
+            font-family: 'Noto Serif Bengali', serif;
+            color: var(--accent-color);
+            margin-top: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            font-size: 1.6em;
+        }
+
+        /* Paragraphs & Lists */
+        p { margin-bottom: 20px; }
+        ul { margin-bottom: 20px; padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        /* Reading Highlight */
+        .reading-highlight {
+            background-color: var(--highlight-bg);
+            border-radius: 6px;
+            padding: 2px 5px;
+            transition: background-color 0.3s;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        /* Keywords */
+        .keyword {
+            color: var(--secondary-color);
+            background-color: var(--keyword-bg);
+            padding: 0 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 1px dotted var(--accent-color);
+        }
+        .keyword:hover { background-color: var(--accent-color); color: white; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
+        }
+        th, td { border: 1px solid var(--border-color); padding: 12px; vertical-align: top; }
+        th { background-color: var(--table-header); color: var(--secondary-color); font-weight: bold; text-align: left; }
+
+        /* Navigation Buttons */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 30px 0;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed var(--border-color);
+        }
+        .nav-container.bottom {
+            margin-top: 50px;
+            padding-top: 20px;
+            padding-bottom: 0;
+            border-bottom: none;
+            border-top: 2px dashed var(--border-color);
+        }
+        .nav-btn {
+            flex: 1;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-family: 'Noto Serif Bengali', serif;
+        }
+        .btn-story { background: linear-gradient(135deg, #ea580c, #c2410c); } /* Orange */
+        .btn-gyan { background: linear-gradient(135deg, #0f766e, #0d9488); } /* Teal */
+        .nav-btn:hover { transform: translateY(-2px); opacity: 0.95; box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+
+        /* Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: #292524;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            font-size: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-left: 5px solid var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 80px; }
+
+        @media (max-width: 600px) {
+            .book-container { padding: 30px 20px; margin-top: 80px; font-size: 18px; }
+            h1 { font-size: 1.8em; }
+            .nav-container { flex-direction: column; }
+            table { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls-bar">
+        <button class="btn-icon" id="playBtn" onclick="togglePlay()" title="শুনুন">
+            <span id="playIcon">▶</span>
+        </button>
+        <button class="btn-icon" onclick="stopAudio()" title="বন্ধ করুন">⏹</button>
+        <div class="divider"></div>
+        <button class="btn-icon" onclick="changeFontSize(1)" title="ফন্ট বড় করুন">A+</button>
+        <button class="btn-icon" onclick="changeFontSize(-1)" title="ফন্ট ছোট করুন">A-</button>
+        <button class="btn-icon" onclick="toggleTheme()" title="থিম বদলান">🌗</button>
+    </div>
+
+    <div class="book-container" id="book-content">
+        
+        <div class="nav-container">
+            <a href="epone.html" class="nav-btn btn-story" target="_self">📖 স্টোরিবুক</a>
+            <a href="https://nabendudebnathbharatiya-bot.github.io/Gyanpath-main-directory/" class="nav-btn btn-gyan" target="_self">🕉️ জ্ঞান পথ</a>
+        </div>
+
+        <h1>সামবেদে সঙ্গীত: বৈদিক স্বরতত্ত্ব ও ভারতীয় শাস্ত্রীয় সঙ্গীতের আদি উৎস</h1>
+
+        <p>ভারতীয় সংস্কৃতির আদি সোপান হিসেবে বেদের গুরুত্ব অপরিসীম। চতুর্বেদের অন্যতম <span class="keyword" onclick="showMeaning('সামবেদ: চারটি বেদের একটি, যা মূলত সুর ও সঙ্গীতের আধার।')">সামবেদ</span> কেবল একটি ধর্মীয় সংহিতা নয়, বরং এটি বিশ্বের প্রাচীনতম সাঙ্গীতিক দলিল হিসেবে স্বীকৃত। [cite_start]সামবেদের মূল ভিত্তি হলো ঋগ্বেদের মন্ত্রসমূহের গীতিময় রূপান্তর যা পরবর্তীকালে ভারতীয় শাস্ত্রীয় সঙ্গীতের রাগ, তাল ও লয়ের ভিত্তিপ্রস্তর স্থাপন করেছে [cite: 3-5]。</p>
+
+        <h2>সামবেদের ব্যুৎপত্তি ও দার্শনিক প্রেক্ষাপট</h2>
+        <p>'সাম' শব্দের আক্ষরিক অর্থ বিশ্লেষণ করলে এর সাঙ্গীতিক গভীরতা অনুধাবন করা সম্ভব। [cite_start]প্রাচীন নিরুক্তকারদের মতে, শব্দটি দুটি ধ্বনির সমন্বয়ে গঠিত: <span class="keyword" onclick="showMeaning('সা: ঋক বা মন্ত্রের বাণী বা কথা।')">'সা'</span> (ঋক বা মন্ত্রের বাণী) এবং <span class="keyword" onclick="showMeaning('অম: সুর বা গীতি।')">'অম'</span> (সুর বা গীতি) [cite: 9-10]। অর্থাৎ, মন্ত্র এবং সুরের মিলনই হলো সাম। এই মিলনকে স্বামী এবং স্ত্রীর সম্পর্কের সাথে তুলনা করা হয়েছে।</p>
+        <p>শ্রীকৃষ্ণ গীতায় বলেছেন, "বেদানাং সামবেদোহস্মি" (বেদের মধ্যে আমিই সামবেদ), কারণ এর মাধ্যমে পরমাত্মার সাথে সংযোগ স্থাপন সহজ। [cite_start]সামগানকে <span class="keyword" onclick="showMeaning('নাদব্রহ্ম: শব্দ বা ধ্বনির মাধ্যমে ঈশ্বরের আরাধনা।')">'নাদব্রহ্ম'</span> সাধনার আদি রূপ হিসেবে গণ্য করা হয় [cite: 14-16]。</p>
+
+        <h2>সামবেদ সংহিতার গঠন ও বিন্যাস</h2>
+        [cite_start]<p>সামবেদ সংহিতা মূলত দুটি প্রধান ভাগে বিভক্ত: <strong>আর্চিক</strong> (মন্ত্রের সাহিত্যিক রূপ) এবং <strong>গান</strong> (মন্ত্রের গায়ন পদ্ধতি) [cite: 19-20]。</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>বিভাগ</th>
+                    <th>মন্ত্র সংখ্যা</th>
+                    <th>বিষয়বস্তু</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>আর্চিক (পূর্বাচিক)</td>
+                    <td>৫৮৫</td>
+                    <td>অগ্নি, ইন্দ্র এবং সোম দেবতার স্তুতিমূলক মন্ত্র।</td>
+                </tr>
+                <tr>
+                    <td>গান (গ্রামগেয়)</td>
+                    <td>১২২৫</td>
+                    <td>লোকালয় বা জনসমক্ষে গাওয়ার উপযুক্ত গীতি।</td>
+                </tr>
+                <tr>
+                    <td>গান (অরণ্যগান)</td>
+                    <td>-</td>
+                    <td>নির্জনে বা অরণ্যে গাওয়ার জন্য আধ্যাত্মিক ও গুহ্য গান।</td>
+                </tr>
+                <tr>
+                    <td>গান (ঊহ ও ঊহ্য)</td>
+                    <td>-</td>
+                    [cite_start]<td>যজ্ঞের জন্য ইম্প্রোভাইজড এবং অতি গোপনীয় গান [cite: 22]।</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>সাম-বিকার: সুরের প্রয়োজনে মন্ত্রের রূপান্তর</h2>
+        [cite_start]<p>ঋগ্বেদের মন্ত্র গাওয়ার সময় সুরের গতি ও মাধুর্য বজায় রাখার জন্য শব্দের ওপর যে পরিবর্তন আনা হতো, তাকে <span class="keyword" onclick="showMeaning('সাম-বিকার: সুরের খাতিরে মন্ত্রের শব্দ পরিবর্তন করার পদ্ধতি।')">সাম-বিকার</span> বলা হয় [cite: 29]। এর প্রধান ৬টি পদ্ধতি হলো:</p>
+        <ul>
+            <li><strong>১. বিকার (Vikara):</strong> বর্ণ পরিবর্তন। [cite_start]যেমন 'অগ্নে' হয়ে যায় 'ওগ্নাই' [cite: 32]।</li>
+            <li><strong>২. বিশ্লেষণ (Vishleshana):</strong> সুরের ছন্দে মিলানোর জন্য শব্দকে ভেঙে ফেলা। [cite_start]যেমন 'বীতয়ে' হয়ে যায় 'ভো-যি-তো-য়...' [cite: 33-34]।</li>
+            <li><strong>৩. [cite_start]বিকর্ষণ (Vikarshana):</strong> স্বরবর্ণকে টেনে দীর্ঘ করা, যা আধুনিক 'আলাপ'-এর আদি রূপ [cite: 35]।</li>
+            <li><strong>৪. [cite_start]অভ্যাস (Abhyasa):</strong> কোনো পদের বারবার পুনরাবৃত্তি করা [cite: 36]।</li>
+            <li><strong>৫. [cite_start]বিরাম (Virama):</strong> গায়নের মাঝে সূক্ষ্ম বিরতি [cite: 37]।</li>
+            <li><strong>৬. স্তোভ (Stobha):</strong> অর্থহীন কিন্তু সুরময় শব্দ যোগ করা, যেমন 'হাউ', 'হোভা'। [cite_start]এটি আধুনিক তারানা'র পূর্বরূপ [cite: 38-39]।</li>
+        </ul>
+
+        <h2>বৈদিক স্বরতত্ত্ব ও সপ্তকের উদ্ভব</h2>
+        <p>ভারতীয় সঙ্গীতের সাতটি স্বরের (সা, রে, গা, মা, পা, ধা, নি) আদি উৎস হলো সামবেদ। ঋগ্বেদের তিনটি স্বর (উদাত্ত, অনুদাত্ত, স্বরিত) থেকে সামবেদে সাতটি পূর্ণাঙ্গ স্বর বিকশিত হয়। [cite_start]সামবেদের স্বরলিপি ছিল <span class="keyword" onclick="showMeaning('অবরোহী: স্বর ওপর থেকে নিচে নামার রীতি।')">অবরোহী</span> [cite: 41-46]。</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>বৈদিক সাম-স্বর</th>
+                    <th>আধুনিক স্বর</th>
+                    <th>সংখ্যা সংকেত</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>কৃষ্ট (Krushta)</td>
+                    <td>পঞ্চম (Pa)</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>প্রথম (Prathama)</td>
+                    <td>মধ্যম (Ma)</td>
+                    <td>১</td>
+                </tr>
+                <tr>
+                    <td>দ্বিতীয় (Dvitiya)</td>
+                    <td>গান্ধার (Ga)</td>
+                    <td>২</td>
+                </tr>
+                <tr>
+                    <td>তৃতীয় (Tritiya)</td>
+                    <td>ঋষভ (Re)</td>
+                    <td>৩</td>
+                </tr>
+                <tr>
+                    <td>চতুর্থ (Chaturtha)</td>
+                    <td>ষড়জ (Sa)</td>
+                    <td>৪</td>
+                </tr>
+                <tr>
+                    <td>মন্দ্র (Mandra)</td>
+                    <td>ধৈবত (Dha)</td>
+                    <td>৫</td>
+                </tr>
+                <tr>
+                    <td>অতিস্বার্য (Atisvarya)</td>
+                    <td>নিষাদ (Ni)</td>
+                    <td>৬</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>সামগানের পরিবেশন শৈলী ও পুরোহিততন্ত্র</h2>
+        <p>সামগান পরিবেশনের জন্য <span class="keyword" onclick="showMeaning('উদ্‌গাতা: সামগান গাওয়ার জন্য নিযুক্ত বিশেষ পুরোহিত।')">'উদ্‌গাতা'</span> নামক পুরোহিতরা নিযুক্ত ছিলেন। [cite_start]যজ্ঞের সময় গানকে ৫টি ভক্তিতে ভাগ করা হতো [cite: 52-60]:</p>
+        <ul>
+            <li><strong>প্রস্তাব:</strong> গানের ভূমিকা ('হুঁ' ধ্বনি দিয়ে শুরু)।</li>
+            <li><strong>উদ্‌গীথ:</strong> গানের মূল অংশ ('ওঁ' ধ্বনি দিয়ে শুরু)।</li>
+            <li><strong>প্রতিহার:</strong> সংযোগকারী অংশ।</li>
+            <li><strong>উপদ্রব:</strong> বিশেষ অলঙ্কার সহযোগে গায়ন।</li>
+            <li><strong>নিধন:</strong> গানের উপসংহার বা সমাপ্তি।</li>
+        </ul>
+
+        <h2>তাল ও ছন্দের বৈজ্ঞানিক ভিত্তি</h2>
+        <p>সামবেদে তাল ও ছন্দের প্রয়োগ ছিল অত্যন্ত বৈজ্ঞানিক (অনুপাত ১:২:৩)। [cite_start]তালের গতি রক্ষার জন্য বাদ্যযন্ত্রের চেয়ে হাতের মুদ্রা বা <span class="keyword" onclick="showMeaning('পাণিব্যবহার: হাতের মুদ্রার মাধ্যমে তাল নির্দেশ করা (Chironomy)।')">'পাণিব্যবহার'</span> (Chironomy) বেশি গুরুত্বপূর্ণ ছিল [cite: 65-69]。</p>
+
+        <h2>শাখা ও বাদ্যযন্ত্র</h2>
+        [cite_start]<p>সামবেদের প্রধান তিনটি সজীব শাখা হলো: কৌথুম, রাণায়নীয় এবং জৈমিনীয় [cite: 73-81]। গানে ব্যবহৃত প্রধান বাদ্যযন্ত্রগুলো ছিল:</p>
+        <ul>
+            [cite_start]<li><strong>তত (Stringed):</strong> বীণা, আড়ম্বরী (উদ্‌গাতা পত্নীদের বাজানো বীণা) [cite: 95-97]।</li>
+            [cite_start]<li><strong>অবনদ্ধ (Percussion):</strong> দুন্দুভি (ড্রাম) [cite: 96]।</li>
+            [cite_start]<li><strong>সুষির (Wind):</strong> বেণু (বাঁশি) [cite: 96]।</li>
+        </ul>
+
+        <h2>উপসংহার</h2>
+        <p>সামবেদ ভারতীয় সঙ্গীতের কেবল জননীই নয়, এটি সঙ্গীতের এক অবিনাশী আত্মা। আধুনিক সঙ্গীতের যন্ত্রাংশ বা পরিবেশন শৈলী পরিবর্তিত হলেও, এর অন্তর্নিহিত সুরের কাঠামো এবং 'নাদব্রহ্ম' সাধনার দর্শনটি সামবেদের সেই প্রাচীন যজ্ঞশালা থেকেই উৎসারিত। [cite_start]সামবেদের এই ঐতিহ্য ভারতীয় সঙ্গীতকে সাম্য ও সত্যের পথে পরিচালিত করে [cite: 111-116]。</p>
+
+        <div class="nav-container bottom">
+            <a href="epone.html" class="nav-btn btn-story" target="_self">📖 স্টোরিবুক</a>
+            <a href="https://nabendudebnathbharatiya-bot.github.io/Gyanpath-main-directory/" class="nav-btn btn-gyan" target="_self">🕉️ জ্ঞান পথ</a>
+        </div>
+    </div>
+
+    <div id="toast">অর্থ...</div>
+
+    <script>
+        // --- AUDIO ENGINE ---
+        const synth = window.speechSynthesis;
+        let utterance = null;
+        let isSpeaking = false;
+        let isPaused = false;
+        let currentBlockIndex = 0;
+        let blocks = [];
+
+        window.onload = function() {
+            const content = document.getElementById('book-content');
+            // Select all readable blocks
+            blocks = Array.from(content.querySelectorAll('h1, h2, p, li, td'));
+        };
+
+        function togglePlay() {
+            const playIcon = document.getElementById('playIcon');
+            if (isSpeaking && !isPaused) {
+                pauseAudio();
+            } else {
+                if (isPaused) {
+                    synth.resume();
+                    isPaused = false;
+                    playIcon.innerHTML = "⏸";
+                } else {
+                    playAudio();
+                }
+            }
+        }
+
+        function playAudio() {
+            if (synth.speaking) synth.cancel();
+            isSpeaking = true;
+            isPaused = false;
+            document.getElementById('playIcon').innerHTML = "⏸";
+            
+            readBlock(currentBlockIndex);
+        }
+
+        function readBlock(index) {
+            if (index >= blocks.length || !isSpeaking) {
+                stopAudio();
+                return;
+            }
+
+            // Remove old highlights
+            blocks.forEach(b => b.classList.remove('reading-highlight'));
+            
+            const element = blocks[index];
+            const text = element.innerText.trim();
+
+            if (!text || text.length < 2) {
+                currentBlockIndex++;
+                readBlock(currentBlockIndex);
+                return;
+            }
+
+            // Highlight & Scroll
+            element.classList.add('reading-highlight');
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            utterance = new SpeechSynthesisUtterance(text);
+            
+            // Voice Config
+            const voices = synth.getVoices();
+            const bnVoice = voices.find(v => v.lang === 'bn-BD' || v.lang === 'bn-IN');
+            if (bnVoice) utterance.voice = bnVoice;
+            utterance.lang = 'bn-IN';
+            utterance.rate = 0.9;
+
+            utterance.onend = function() {
+                if (isSpeaking && !isPaused) {
+                    currentBlockIndex++;
+                    readBlock(currentBlockIndex);
+                }
+            };
+
+            utterance.onerror = function(e) {
+                console.error("Audio Error:", e);
+                if (isSpeaking) {
+                    currentBlockIndex++;
+                    readBlock(currentBlockIndex);
+                }
+            };
+
+            synth.speak(utterance);
+        }
+
+        function pauseAudio() {
+            if (synth.speaking) {
+                synth.pause();
+                isPaused = true;
+                document.getElementById('playIcon').innerHTML = "▶";
+            }
+        }
+
+        function stopAudio() {
+            synth.cancel();
+            isSpeaking = false;
+            isPaused = false;
+            currentBlockIndex = 0;
+            document.getElementById('playIcon').innerHTML = "▶";
+            blocks.forEach(b => b.classList.remove('reading-highlight'));
+        }
+
+        // --- EXTRAS ---
+        let toastTimeout;
+        function showMeaning(text) {
+            const toast = document.getElementById("toast");
+            toast.innerText = text;
+            toast.className = "show";
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.className = toast.className.replace("show", ""), 5000);
+        }
+
+        let fontSize = 19;
+        function changeFontSize(val) {
+            fontSize = Math.max(16, Math.min(24, fontSize + val));
+            document.getElementById('book-content').style.fontSize = fontSize + 'px';
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        }
+
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => synth.getVoices();
+        }
+    </script>
+</body>
+</html>

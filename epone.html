@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পর্ব ১: সুরের উৎস | সামবেদ সঙ্গীত শিক্ষা</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        (function() {
+            try {
+                if (!sessionStorage.getItem("chakra_user_login")) {
+                    // console.log("Security Check: Session not found (Bypassed for testing)");
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #fdfbf7;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Slide Styles */
+        .slide {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.6s ease-in-out;
+            position: relative;
+        }
+
+        .active-slide { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Dialogue Box */
+        .dialogue-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-left: 6px solid #d97706;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        /* Character Avatar */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-bottom: -15px;
+            z-index: 10;
+            background: #eee;
+            object-fit: cover;
+        }
+
+        /* Radio Styles */
+        .radio-container {
+            background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+            padding: 25px;
+            border-radius: 20px;
+            border: 4px solid #b45309;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            width: 320px;
+            position: relative;
+        }
+        .radio-screen {
+            background: #4ade80;
+            color: #064e3b;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .speaker-grid {
+            background: radial-gradient(circle, #444 10%, #222 90%);
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            margin: 0 auto;
+            border: 3px solid #555;
+            position: relative;
+        }
+        .playing-anim { animation: pulse 0.8s infinite alternate; }
+        @keyframes pulse {
+            from { transform: scale(1); box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); }
+            to { transform: scale(1.05); box-shadow: 0 0 25px rgba(234, 179, 8, 0.6); }
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+
+        /* Next Button (Safety) */
+        .skip-btn {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+        .skip-btn:hover { opacity: 1; color: #d97706; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="radioPodcast">
+        <source src="https://raw.githubusercontent.com/nabendudebnathbharatiya-bot/My-app-assets2/main/Ved/Vedbibhajon/podcast.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="slide active-slide" id="slide1">
+        <div class="max-w-3xl">
+            <h3 class="text-amber-600 font-bold tracking-widest uppercase mb-2">পর্ব ১</h3>
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-4">সুরের উৎস</h1>
+            <p class="text-xl text-gray-500 italic mb-8">"বাবা ও ছেলের এক বিকেলে সঙ্গীত অন্বেষণ"</p>
+            
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" 
+                 class="rounded-xl shadow-2xl mx-auto mb-8 w-full max-w-md h-64 object-cover">
+
+            <button onclick="startStory()" class="btn-primary">
+                ▶ গল্প শুরু করুন
+            </button>
+        </div>
+    </div>
+
+    <div class="slide" id="slide2">
+        <div class="absolute inset-0 z-[-1] opacity-20">
+            <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover">
+        </div>
+
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priyam&age=12" class="avatar border-amber-500">
+        
+        <div class="dialogue-box animate-bounce-slight">
+            <p class="text-sm font-bold text-amber-600 uppercase">প্রিয়ম (১২)</p>
+            <p class="text-2xl text-gray-800 mt-2">"বাবা, একটা কথা বলো তো... এই যে আমরা গান শুনি, এই সঙ্গীত বা সুর আসলে এল কোথা থেকে? কে সৃষ্টি করল?"</p>
+        </div>
+
+        <button onclick="nextSlide(3)" class="btn-primary">
+            বাবার উত্তর শুনুন ➝
+        </button>
+    </div>
+
+    <div class="slide" id="slide3">
+        <img src="https://raw.githubusercontent.com/nabendudebnathbharatiya-bot/My-app-assets2/main/Ved/Vedbibhajon/Screenshot_20260216-052239.png" class="avatar border-gray-600">
+        
+        <div class="dialogue-box mb-8">
+            <p class="text-sm font-bold text-gray-600 uppercase">বাবা</p>
+            <p class="text-xl text-gray-700 mt-2">"খুব সুন্দর প্রশ্ন করেছিস প্রিয়ম! কাকতালীয়ভাবে, আজ রেডিওতে ঠিক এই বিষয় নিয়েই একটা অনুষ্ঠান হচ্ছে। আয়, আগে একটু শুনি।"</p>
+        </div>
+
+        <div class="radio-container">
+            <div class="radio-screen">
+                <span class="animate-pulse">● REC</span> | Vedic FM
+            </div>
+            <div class="speaker-grid"></div>
+        </div>
+
+        <button onclick="startRadioScene()" class="btn-primary mt-6">
+            রেডিও অন করুন 📻
+        </button>
+    </div>
+
+    <div class="slide" id="slide4">
+        <h2 class="text-2xl font-bold text-gray-700 mb-6">রেডিও অনুষ্ঠান চলছে...</h2>
+        
+        <div class="radio-container mb-6">
+            <div class="radio-screen text-center">
+                <span id="radioText">অপেক্ষা করুন...</span>
+            </div>
+            <div class="speaker-grid" id="speakerAnim"></div>
+        </div>
+
+        <div id="radioControls" class="flex flex-col items-center gap-4">
+            <button onclick="playPodcast()" class="btn-primary bg-blue-600 hover:bg-blue-700">
+                ▶ পডকাস্ট শুনুন
+            </button>
+        </div>
+
+        <div class="skip-btn" onclick="skipRadio()">
+            অডিও চলছে না? স্কিপ করুন ➝
+        </div>
+    </div>
+
+    <div class="slide" id="slide5">
+        <img src="https://raw.githubusercontent.com/nabendudebnathbharatiya-bot/My-app-assets2/main/Ved/Vedbibhajon/images%20(4).jpeg" 
+             class="w-64 h-64 rounded-full border-4 border-amber-500 shadow-xl mb-6 object-cover opacity-90">
+
+        <div class="dialogue-box">
+            <p class="text-sm font-bold text-gray-600 uppercase">বাবা</p>
+            <p class="text-xl text-gray-700 mt-2">
+                "শুনলি তো? এই যে সুর, এর আদি উৎস হলো <strong class="text-amber-700">সামবেদ</strong>। হাজার বছর আগে ঋষিরা মন্ত্রগুলোকে শুধু পড়তেন না, নির্দিষ্ট সুরে গাইতেন। সেখান থেকেই আমাদের আজকের ৭টি সুর (সা-রে-গা-মা...) এসেছে।"
+            </p>
+        </div>
+
+        <button onclick="nextSlide(6)" class="btn-primary">
+            সামনে চলুন ➝
+        </button>
+    </div>
+
+    <div class="slide" id="slide6">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">বসার ঘরের দেয়াল...</h2>
+        <p class="text-gray-500 mb-8">দেওয়ালে ঝোলানো ক্যালেন্ডারটি নজরে পড়ল</p>
+
+        <div class="relative group cursor-pointer transition-transform hover:scale-105" onclick="goToEpisode2()">
+            <div class="bg-white p-6 rounded-lg shadow-2xl w-80 border-t-8 border-red-600 mx-auto relative z-10">
+                <div class="text-center border-b pb-4 mb-4">
+                    <h3 class="text-6xl font-bold text-red-600">২৫</h3>
+                    <p class="text-xl text-gray-500 font-bold">বৈশাখ, ১৪৩৩</p>
+                </div>
+                
+                <div class="bg-amber-50 p-4 rounded border border-amber-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded">নতুন</span>
+                        <span class="text-xs text-gray-400">বিজ্ঞাপন</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-amber-800">চিরিধান থেরাপি সেন্টার</h4>
+                    <p class="text-sm text-gray-600 mt-1">হারানো সুরের খোঁজ পেতে আজই আসুন!</p>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-[-30px] right-[20px] text-5xl animate-bounce z-20">
+                👆
+            </div>
+        </div>
+
+        <div class="dialogue-box mt-10">
+            <p class="text-sm font-bold text-amber-600">প্রিয়ম</p>
+            <p class="text-xl text-gray-700">"বাবা দেখো! ক্যালেন্ডারেও সেই সুর চিকিৎসার বিজ্ঞাপন। চলো না ঘুরে আসি!"</p>
+        </div>
+
+        <button onclick="goToEpisode2()" class="btn-primary bg-green-600 hover:bg-green-700">
+            পরবর্তী পর্ব দেখুন ➝
+        </button>
+    </div>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+        const podcast = document.getElementById('radioPodcast');
+        const radioText = document.getElementById('radioText');
+        const speakerAnim = document.getElementById('speakerAnim');
+
+        // Initial Start
+        function startStory() {
+            // Attempt to play BG music softly
+            bgMusic.volume = 0.1;
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => console.log("Auto-play prevented"));
+            }
+            nextSlide(2);
+        }
+
+        // Slide Navigation
+        function nextSlide(n) {
+            document.querySelectorAll('.slide').forEach(el => el.classList.remove('active-slide'));
+            document.getElementById('slide' + n).classList.add('active-slide');
+        }
+
+        // Radio Scene Logic
+        function startRadioScene() {
+            nextSlide(4);
+            bgMusic.pause(); // Pause BG music for radio focus
+        }
+
+        function playPodcast() {
+            const controls = document.getElementById('radioControls');
+            controls.innerHTML = `<p class="text-blue-600 font-bold animate-pulse">পডকাস্ট চলছে...</p>`;
+            
+            radioText.innerText = "সামবেদ বৃত্তান্ত...";
+            speakerAnim.classList.add('playing-anim');
+            
+            podcast.currentTime = 0;
+            podcast.play();
+
+            podcast.onended = function() {
+                speakerAnim.classList.remove('playing-anim');
+                radioText.innerText = "অনুষ্ঠান সমাপ্ত";
+                
+                // Resume BG music
+                bgMusic.play();
+
+                controls.innerHTML = `
+                    <button onclick="nextSlide(5)" class="btn-primary bg-green-600 hover:bg-green-700">
+                        বাবার ব্যাখ্যা শুনুন ➝
+                    </button>
+                `;
+            };
+        }
+
+        // Fallback if audio fails
+        function skipRadio() {
+            bgMusic.play().catch(e => {});
+            nextSlide(5);
+        }
+
+        // Link to Episode 2
+        function goToEpisode2() {
+            window.location.href = "episode2.html";
+        }
+    </script>
+</body>
+</html>

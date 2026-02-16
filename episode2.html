@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পর্ব ২ | সাত সুরের রহস্য</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        (function() {
+            try {
+                if (!sessionStorage.getItem("chakra_user_login")) {
+                    // console.log("Security Check: Session not found (Testing Mode)");
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #1a1a1a; color: white; overflow: hidden; }
+        
+        .slide { 
+            display: none; 
+            height: 100vh; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 20px; 
+            animation: fadeIn 0.8s ease; 
+        }
+        .active-slide { display: flex; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .dialogue-box {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a1a;
+            border-left: 6px solid #d97706;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Swara Instrument Styles */
+        .swara-key {
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(to bottom, #f3f4f6 0%, #d1d5db 100%);
+            border: 1px solid #9ca3af;
+            border-radius: 0 0 5px 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .swara-key:active, .swara-key.playing {
+            background: #fbbf24;
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .swara-container {
+            display: flex;
+            gap: 10px;
+            background: #4b5563;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-top: 10px solid #d97706;
+        }
+
+        .info-card {
+            background: #374151;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #fbbf24;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .btn-next {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: none;
+        }
+        .btn-next:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic2" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="slide active-slide" id="slide1">
+        <h1 class="text-4xl text-yellow-400 font-bold mb-4">চিরিধান থেরাপি সেন্টার</h1>
+        <p class="text-gray-400 mb-8">ভার্চুয়াল ট্যুর লোডিং...</p>
+        
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" 
+             class="w-full max-w-lg rounded-lg shadow-2xl mb-6 opacity-80 border-2 border-yellow-600">
+
+        <button onclick="startEp2()" class="btn-next bg-yellow-600 hover:bg-yellow-700">
+            ▶ প্রবেশ করুন
+        </button>
+    </div>
+
+    <div class="slide" id="slide2">
+        <div class="flex flex-col items-center">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priyam&age=12" class="w-20 h-20 rounded-full border-2 border-white mb-4">
+            
+            <div class="dialogue-box">
+                <p class="text-sm font-bold text-orange-600">প্রিয়ম:</p>
+                <p class="text-xl">"বাবা! দেখো, এখানে একটা অদ্ভুত পিয়ানো আছে। কিন্তু এর বোতামগুলোতে সা-রে-গা-মা লেখা নেই, অন্য কিছু লেখা!"</p>
+            </div>
+
+            <div class="dialogue-box" style="border-color: #059669;">
+                <p class="text-sm font-bold text-green-700">বাবা:</p>
+                <p class="text-lg">"ঠিক ধরেছিস! এটা হলো <span class="font-bold text-red-600">'সাম-স্বর যন্ত্র'</span>। আধুনিক গানের 'সা-রে-গা-মা' আসলে হাজার বছর আগের সামবেদ থেকেই এসেছে।"</p>
+            </div>
+
+            <button onclick="nextSlide(3)" class="btn-next">
+                যন্ত্রটি বাজিয়ে দেখান ➝
+            </button>
+        </div>
+    </div>
+
+    <div class="slide" id="slide3">
+        <h2 class="text-2xl text-yellow-400 font-bold">সাম-স্বর ম্যাজিক যন্ত্র</h2>
+        <p class="text-sm text-gray-400">বোতামে ক্লিক করে প্রাচীন নাম জানুন</p>
+
+        <div class="swara-container">
+            <div class="swara-key" onclick="playNote('Ma', 'প্রথম (Prathama)', 1)">মা (Ma)</div>
+            
+            <div class="swara-key" onclick="playNote('Ga', 'দ্বিতীয় (Dvitiya)', 2)">গা (Ga)</div>
+            
+            <div class="swara-key" onclick="playNote('Re', 'তৃতীয় (Tritiya)', 3)">রে (Re)</div>
+            
+            <div class="swara-key" onclick="playNote('Sa', 'চতুর্থ (Chaturtha)', 4)">সা (Sa)</div>
+        </div>
+
+        <div id="noteInfo" class="info-card max-w-md">
+            <h3 id="modernName" class="text-xl font-bold text-white">---</h3>
+            <p class="text-gray-400 text-sm mt-1">এর বৈদিক নাম হলো:</p>
+            <h4 id="vedicName" class="text-2xl font-bold text-yellow-400 mt-1">---</h4>
+            <p class="text-xs text-gray-500 mt-2">সামবেদে এটি <span id="vedicNum" class="text-white font-bold">---</span> নম্বর স্বর।</p>
+        </div>
+
+        <button id="finishLevelBtn" onclick="nextSlide(4)" class="btn-next hidden">
+            রহস্যভেদ সম্পূর্ণ! সামনে চলুন ➝
+        </button>
+    </div>
+
+    <div class="slide" id="slide4">
+        <div class="dialogue-box">
+            <p class="text-sm font-bold text-green-700">বাবা:</p>
+            <p class="text-lg">"দেখলি তো? আমরা আজ যে গান গাই, তার শিকড় ওই যজ্ঞের আগুনের পাশেই পোঁতা আছে। সামবেদের সুরগুলো ওপর থেকে নিচে নামত, ঠিক ঝরনার মতো।"</p>
+        </div>
+
+        <img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=600&auto=format&fit=crop" 
+             class="w-64 h-40 rounded-lg mt-6 border border-gray-600">
+
+        <h3 class="text-xl mt-6 text-yellow-500">পরবর্তী পর্বে:</h3>
+        <p class="text-gray-400">"প্রাচীন বাদ্যযন্ত্রের খোঁজ"</p>
+
+        <button onclick="window.location.href='episode3.html'" class="btn-next bg-blue-600 hover:bg-blue-700">
+            পর্ব ৩ শুরু করুন ➝
+        </button>
+    </div>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic2');
+        let notesPlayed = 0;
+
+        function startEp2() {
+            // ১. স্লাইড চেঞ্জ (ইউজার ইন্টারঅ্যাকশন হিসেবে গণ্য হবে)
+            nextSlide(2);
+
+            // ২. অডিও প্লে করার চেষ্টা
+            try {
+                bgMusic.volume = 0.3;
+                bgMusic.play().catch(e => console.log("Audio autoplay prevented"));
+            } catch(e) {}
+        }
+
+        function nextSlide(n) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active-slide'));
+            document.getElementById('slide' + n).classList.add('active-slide');
+        }
+
+        // টোন জেনারেটর (Browser Audio API)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playTone(freq) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.value = freq;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
+            osc.stop(audioCtx.currentTime + 1);
+        }
+
+        function playNote(modern, vedic, num) {
+            // Visual Update
+            document.getElementById('modernName').innerText = "আধুনিক স্বর: " + modern;
+            document.getElementById('vedicName').innerText = vedic;
+            document.getElementById('vedicNum').innerText = num;
+            
+            const infoCard = document.getElementById('noteInfo');
+            infoCard.style.opacity = "1";
+            infoCard.classList.add('animate-pulse');
+            setTimeout(() => infoCard.classList.remove('animate-pulse'), 500);
+
+            // Audio Play
+            let freq = 0;
+            if(modern === 'Ma') freq = 349.23;
+            if(modern === 'Ga') freq = 329.63;
+            if(modern === 'Re') freq = 293.66;
+            if(modern === 'Sa') freq = 261.63;
+            
+            playTone(freq);
+
+            // Game Logic: 3 টি নোট বাজালেই বাটন আসবে
+            notesPlayed++;
+            if(notesPlayed >= 3) {
+                document.getElementById('finishLevelBtn').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
